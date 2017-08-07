@@ -1,0 +1,26 @@
+package com.lin.service;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Service implements Runnable {
+private ServerSocket server;
+public void init() throws IOException {
+	this.server = new ServerSocket(5506);
+	
+}
+@Override
+public void run() {
+	while(true) {
+		try {
+			Socket socket = this.server.accept();
+		} catch (IOException e) {
+			System.out.println("¡¨Ω” ß∞‹");
+			e.printStackTrace();
+		}
+	}
+	
+}
+
+}

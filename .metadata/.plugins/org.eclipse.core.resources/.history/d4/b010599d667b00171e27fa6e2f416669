@@ -1,0 +1,33 @@
+package com.lin.service;
+
+import java.io.IOException;
+import java.net.ServerSocket;
+import java.net.Socket;
+
+public class Service implements Runnable {
+private ServerSocket server;
+public void init() throws IOException {
+	this.server = new ServerSocket(5506);
+	
+}
+@Override
+public void run() {
+	Socket socket = null;
+	while(true) {
+		try {
+			socket = this.server.accept();
+		} catch (IOException e) {
+			System.out.println("连接失败");
+			e.printStackTrace();
+		}
+		try {
+			ClientSocket clientSocket = new ClientSocket(socket);
+		} catch (IOException e) {
+			System.out.println("初始化错误");
+			e.printStackTrace();
+		}
+	}
+	
+}
+
+}

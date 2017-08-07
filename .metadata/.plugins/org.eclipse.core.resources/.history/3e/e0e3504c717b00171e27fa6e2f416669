@@ -1,0 +1,12 @@
+package com.lin.utils;
+
+public class MessageQueue {
+	private Message head;
+	private Message lest;
+	public MessageQueue() {
+		head = new Message();
+		head.next = null;
+		lest = new Message();
+	}
+	
+}

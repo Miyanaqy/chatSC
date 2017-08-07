@@ -1,0 +1,22 @@
+package com.lin.panels;
+
+import java.io.IOException;
+
+import com.lin.service.Service;
+
+public class PanelMain {
+
+	public static void main(String[] args) {
+		Service service = new Service();
+		try {
+			service.init();
+		} catch (IOException e) {
+			System.out.println("≥ı ºªØ ß∞‹");
+			e.printStackTrace();
+		}
+		Thread thread = new Thread(service);
+		thread.start();
+
+	}
+
+}

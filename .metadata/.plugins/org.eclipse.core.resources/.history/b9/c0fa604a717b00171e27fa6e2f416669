@@ -1,0 +1,6 @@
+package com.lin.utils;
+
+public class MessageDemo {
+	private Message message;
+
+}

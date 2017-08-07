@@ -1,0 +1,11 @@
+package com.lin.utils;
+
+public class MessageQueue {
+	private Message header = null;
+	private Message next = null;
+	
+	public void add(Message message) {
+		
+	}
+	
+}
