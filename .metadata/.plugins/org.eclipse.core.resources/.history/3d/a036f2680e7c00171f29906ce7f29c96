@@ -1,0 +1,38 @@
+package com.lin.service;
+
+import com.lin.utils.Message;
+import com.lin.utils.MessageQueue;
+
+public class ServerController implements Runnable {
+	public MessageQueue outMessageQueue;
+	public MessageQueue inMessageQueue;
+	
+	public ServerController() {
+		this.outMessageQueue = MessageQueue.getMessageQueue("outMessageQueue");
+		this.inMessageQueue = MessageQueue.getMessageQueue("inMessageQueue");
+	}
+	@Override
+	public void run() {
+		Message message = null;
+		String line = null;
+		System.out.println("消息读取队列已建立");
+		while(true) {
+			message = this.outMessageQueue.read();
+			if(message == null) {
+				try {
+					//System.out.println("等待接收消息");
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}else {
+				line = message.getMessage();
+				inMessageQueue.add(message);
+				
+			}
+		}
+		
+	}
+	
+}

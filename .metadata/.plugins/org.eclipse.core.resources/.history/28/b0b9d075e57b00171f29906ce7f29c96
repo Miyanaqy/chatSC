@@ -1,0 +1,20 @@
+package com.lin.service;
+
+import java.io.ObjectOutputStream;
+
+import com.lin.utils.MessageQueue;
+
+public class WriteToClient implements Runnable {
+	public MessageQueue messageQueue;
+	public ObjectOutputStream os = null;
+	public WriteToClient() {
+		messageQueue = MessageQueue.getMessageQueue("inMessageQueue");
+		
+	}
+	@Override
+	public void run() {
+		
+		
+	}
+
+}

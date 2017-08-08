@@ -1,0 +1,23 @@
+package com.lin.utils;
+
+public class Message {
+	private String addr;
+	private String message;
+	public Message next;
+	public Message() {
+		this.next = null;
+	}
+	public String getAddr() {
+		return addr;
+	}
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
+}

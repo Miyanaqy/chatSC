@@ -1,6 +1,8 @@
 package com.lin.utils;
 
-public class Message {
+import java.io.Serializable;
+
+public class Message implements Serializable {
 	private String addr;
 	private String message;
 	public Message next;

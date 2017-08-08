@@ -1,0 +1,20 @@
+package com.lin.service;
+
+import com.lin.utils.Message;
+import com.lin.utils.MessageQueue;
+
+public class ServerController implements Runnable {
+	public MessageQueue messageQueue;
+	
+	public ServerController() {
+		this.messageQueue = MessageQueue.getMessageQueue("outMessageQueue");
+	}
+	@Override
+	public void run() {
+		Message message = null;
+		String line = null;
+		while(line.equals())
+		
+	}
+	
+}

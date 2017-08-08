@@ -1,0 +1,51 @@
+package com.lin.service;
+
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
+import com.lin.utils.Message;
+import com.lin.utils.MessageQueue;
+import com.lin.utils.MessageSeria;
+
+public class WriteToClient implements Runnable {
+	public MessageQueue messageQueue;
+	public WriteToClient() {
+		messageQueue = MessageQueue.getMessageQueue("inMessageQueue");
+	}
+	@Override
+	public void run() {
+		Message message = null;
+		ObjectOutputStream oos;
+		while(true) {
+			message = messageQueue.read();
+			if(message == null) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}else{
+				MessageSeria ms = new MessageSeria();
+				ms.setAddr("03231630");
+				ms.setMessage("这是信息");
+				for(Socket socket:ClientSocket.socketSet) {
+					try {
+						oos = new ObjectOutputStream(socket.getOutputStream());
+						oos.writeObject(ms);
+						oos.flush();
+						//os.writeObject(message);
+						//os.flush();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					
+				}
+				
+			}
+		}
+		
+	}
+
+}

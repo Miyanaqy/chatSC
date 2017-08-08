@@ -1,0 +1,25 @@
+package clientDemo;
+
+import java.io.BufferedReader;
+
+import com.lin.utils.Message;
+public class ServerListener implements Runnable {
+	public volatile boolean exit =false;
+	private BufferedReader buffered = null;
+	
+	public BufferedReader getBuffered() {
+		return buffered;
+	}
+	public void setBuffered(BufferedReader buffered) {
+		this.buffered = buffered;
+	}
+	@Override
+	public void run() {
+		while(!this.exit) {
+			Message message = null;
+			message
+		}
+		
+	}
+
+}

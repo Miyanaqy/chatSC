@@ -1,0 +1,35 @@
+package com.lin.service;
+
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.lin.utils.Message;
+import com.lin.utils.MessageQueue;
+
+public class WriteToClient implements Runnable {
+	public MessageQueue messageQueue;
+	public List <ObjectOutputStream> oslist = null;
+	public WriteToClient() {
+		messageQueue = MessageQueue.getMessageQueue("inMessageQueue");
+		oslist = new ArrayList<ObjectOutputStream>();
+	}
+	@Override
+	public void run() {
+		Message message = null;
+		while(true) {
+			message = messageQueue.read();
+			if(message == null) {
+				try {
+					Thread.sleep(1000);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+			}else {
+				
+			}
+		}
+		
+	}
+
+}

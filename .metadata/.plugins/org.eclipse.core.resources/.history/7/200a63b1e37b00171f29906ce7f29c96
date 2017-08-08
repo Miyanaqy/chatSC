@@ -1,0 +1,16 @@
+package com.lin.service;
+
+import com.lin.utils.MessageQueue;
+
+public class WriteToClient implements Runnable {
+	public MessageQueue messageQueue;
+	public WriteToClient() {
+		messageQueue = MessageQueue.getMessageQueue("inMessageQueue");
+	}
+	@Override
+	public void run() {
+		
+		
+	}
+
+}

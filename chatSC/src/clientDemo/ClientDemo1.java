@@ -3,6 +3,7 @@ package clientDemo;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 
@@ -11,7 +12,7 @@ public class ClientDemo1 {
 	@SuppressWarnings("null")
 	public static void main(String[] args) throws IOException {
 		Socket socket = null;
-		BufferedReader in = null;
+		ObjectInputStream ois = null;
 		BufferedReader out = null;
 		PrintWriter write = null;
 		String line ="";
@@ -21,16 +22,25 @@ public class ClientDemo1 {
 			System.out.println("客户端连接失败");
 			e.printStackTrace();
 		}
-		in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+		ois = new ObjectInputStream(socket.getInputStream());
+		ServerListener sl = new ServerListener();
+		sl.setOis(ois);
+		Thread thread = new Thread(sl);
+		thread.start();
+		
 		out = new BufferedReader(new InputStreamReader(System.in));
 		write = new PrintWriter(socket.getOutputStream());
+		line = out.readLine();
 		while(!line.equals("EXIT")) {
-			line = out.readLine();
 			write.println(line);
 			write.flush();
+			line = out.readLine();
 		}
+		write.println(line);
+		write.flush();
+		//sl.exit = true;
 		write.close();
 		out.close();
-		in.close();
+		
 	}
 }

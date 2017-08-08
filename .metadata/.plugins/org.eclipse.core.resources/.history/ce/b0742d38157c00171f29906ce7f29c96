@@ -1,0 +1,74 @@
+package com.lin.service;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.lin.utils.Message;
+import com.lin.utils.MessageQueue;
+
+public class ClientSocket implements Runnable {
+	public static final String EXIT = "EXIT";
+	public static Set<ObjectOutputStream> clientStreamSet;
+	//public static Set<Socket> socketSet;
+	static {
+		clientStreamSet = new HashSet<ObjectOutputStream>();
+		//socketSet = new HashSet<Socket>();
+	}
+	private Socket socket;
+	ObjectOutputStream oos = null;
+	BufferedReader br = null;
+	MessageQueue mq = null;
+	public ClientSocket(Socket socket) throws IOException {
+		this.socket = socket;
+		//ClientSocket.socketSet.add(socket);
+		this.br = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+		this.mq = MessageQueue.getMessageQueue("outMessageQueue");
+		this.oos = new ObjectOutputStream(socket.getOutputStream());
+		ClientSocket.clientStreamSet.add(this.oos);
+		
+	}
+	@Override
+	public void run() {
+		String line = "已经连接";
+		Message message = new Message();
+		try {
+		while(!(line.equals(ClientSocket.EXIT))) {
+			message.setAddr(socket.getLocalAddress().toString());
+			message.setMessage(line);
+			mq.add(message);
+			try {
+				line = br.readLine();
+			} catch (IOException e) {
+				System.out.println("数据获取失败");
+				
+			}
+			//if(socket.isConnected() && !socket.isClosed())
+			//	line = ClientSocket.EXIT;
+		}
+		}catch(Exception e) {
+			System.out.println("没有接收到数据");
+			e.printStackTrace();
+		}
+		//ClientSocket.socketSet.remove(this.socket);
+		try {
+			br.close();
+		} catch (IOException e) {
+			System.out.println("bufferedReader关闭失败");
+			e.printStackTrace();
+		}
+		/*try {
+			//ClientSocket.clientStreamSet.remove(oos);
+			//oos.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}*/
+		
+		System.out.println("客户端离开");
+	}
+
+}

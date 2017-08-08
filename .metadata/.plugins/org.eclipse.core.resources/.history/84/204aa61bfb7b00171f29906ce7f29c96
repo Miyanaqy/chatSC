@@ -1,0 +1,40 @@
+package clientDemo;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+
+import com.lin.utils.Message;
+public class ServerListener implements Runnable {
+	public volatile boolean exit =false;
+	private ObjectInputStream ois = null;
+	
+
+	public ObjectInputStream getOis() {
+		return ois;
+	}
+
+
+	public void setOis(ObjectInputStream ois) {
+		this.ois = ois;
+	}
+
+
+	@Override
+	public void run() {
+		String line = null;
+		while(!this.exit) {
+			Message message = null;
+			Object obj = null;
+			try {
+				obj = ois.readObject();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			message = (Message) obj;
+			
+		}
+		
+	}
+
+}

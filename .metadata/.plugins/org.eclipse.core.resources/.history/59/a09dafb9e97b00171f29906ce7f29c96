@@ -1,0 +1,14 @@
+package clientDemo;
+
+import java.net.Socket;
+public class ServerLestener implements Runnable {
+	private BufferedReader bf;
+	@Override
+	public void run() {
+		while(true) {
+			
+		}
+		
+	}
+
+}

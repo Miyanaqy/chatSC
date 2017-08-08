@@ -1,0 +1,11 @@
+package clientDemo;
+
+public class ServerLestener implements Runnable {
+
+	@Override
+	public void run() {
+		while()
+		
+	}
+
+}
