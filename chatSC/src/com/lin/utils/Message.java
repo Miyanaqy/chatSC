@@ -2,6 +2,7 @@ package com.lin.utils;
 
 import java.io.Serializable;
 
+@SuppressWarnings("serial")
 public class Message implements Serializable {
 	private String addr;
 	private String message;

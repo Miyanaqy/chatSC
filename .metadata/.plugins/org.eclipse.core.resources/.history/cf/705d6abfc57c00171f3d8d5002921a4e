@@ -1,0 +1,12 @@
+package com.lin.utils;
+
+import java.sql.Connection;
+import java.util.Vector;
+
+public class ConnectionPool {
+	private static Vector pool;
+	static {
+		pool = new Vector();
+	}
+
+}

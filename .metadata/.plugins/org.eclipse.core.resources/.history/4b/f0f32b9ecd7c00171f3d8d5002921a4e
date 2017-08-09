@@ -1,0 +1,35 @@
+package com.lin.utils;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Vector;
+
+public class ConnectionPool {
+	private Vector<Connection> pool;
+	public ConnectionPool() {
+		pool = new Vector<Connection>();
+		try {
+			createConnection();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	public void createConnection() throws SQLException {
+		for(int i = 0; i < 5; i++) {
+			Connection conn = JDBCUtils.getConnection();
+			this.pool.add(conn);
+		}
+	}
+	public void getConnection() {
+		Connection conn = null;
+		if(pool.isEmpty()) {
+			try {
+				createConnection();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}else {
+			conn = pool.remove(0);
+		}
+	}
+}

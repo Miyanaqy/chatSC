@@ -1,0 +1,8 @@
+
+package com.lin.dao;
+
+public class UserDao {
+	private String username;
+	
+	
+}

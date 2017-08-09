@@ -1,0 +1,18 @@
+package com.lin.utils;
+
+import java.sql.Connection;
+import java.util.Vector;
+
+public class ConnectionPool {
+	private Vector<Connection> pool;
+	public ConnectionPool() {
+		pool = new Vector<Connection>();
+		createConnection();
+	}
+	public void createConnection() {
+		for(int i;i<5;i++) {
+			
+		}
+	}
+
+}
