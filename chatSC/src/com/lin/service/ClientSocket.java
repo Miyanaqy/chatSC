@@ -56,12 +56,12 @@ public class ClientSocket implements Runnable {
 			System.out.println("bufferedReader关闭失败");
 			e.printStackTrace();
 		}
-		/*try {
-			//ClientSocket.clientStreamSet.remove(oos);
-			//oos.close();
+		try {
+			ClientSocket.clientStreamSet.remove(oos);
+			oos.close();
 		}catch(IOException e) {
 			e.printStackTrace();
-		}*/
+		}
 		
 		System.out.println("客户端离开");
 	}

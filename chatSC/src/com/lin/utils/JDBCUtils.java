@@ -1,0 +1,61 @@
+package com.lin.utils;
+
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
+
+public class JDBCUtils {
+	private static HashSet<Connection> pool;
+	private static final String DRIVER;
+	private static final String URL;
+	private static final String USER;
+	private static final String PASSWORD;
+	
+	static {
+		Properties pro = new Properties();
+		InputStream in = null;
+		try {
+			in = new BufferedInputStream(new FileInputStream("jdbc.properties"));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		try {
+			pro.load(in);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		DRIVER = pro.getProperty("driver");
+		URL = pro.getProperty("url");
+		USER = pro.getProperty("user");
+		PASSWORD = pro.getProperty("password");
+		try {
+			Class.forName(DRIVER);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		pool = new HashSet<Connection>();
+		for(int i=0;i<5;i++) {
+			Connection conn = null;
+			try {
+				conn = DriverManager.getConnection(URL, USER, PASSWORD);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			pool.add(conn);
+		}
+	}
+	public Connection getConnection() {
+		return null;
+	}
+}

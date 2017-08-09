@@ -29,7 +29,7 @@ public class ServerController implements Runnable {
 			}else {
 				line = message.getMessage();
 				System.out.println(line);
-				//inMessageQueue.add(message);
+				inMessageQueue.add(message);
 				
 			}
 		}

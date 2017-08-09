@@ -1,0 +1,26 @@
+package com.lin.utils;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.util.HashSet;
+import java.util.Properties;
+import java.util.Set;
+
+public class JDBCUtils {
+	private static Set<Connection> pool;
+	private static final String DRIVER;
+	private static final String URL;
+	private static final String USER;
+	private static final String PASSWORD;
+	
+	static {
+		Properties pro = new Properties();
+		InputStream in = new InputStream(new FileInputStream("jdbc.properties"));
+		Class.forName(DRIVER);
+		pool = new HashSet<Connection>();
+		for(int i=0;i<5;i++) {
+			Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+		}
+	}
+
+}

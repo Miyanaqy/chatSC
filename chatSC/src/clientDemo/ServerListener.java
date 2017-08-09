@@ -21,28 +21,24 @@ public class ServerListener implements Runnable {
 
 	@Override
 	public void run() {
-		String line = null;
 		Message message = null;
-		Object obj = null;
 		while(!this.exit) {
 			
 			try {
-				obj = ois.readObject();
+				message =(Message) ois.readObject();
 			} catch (Exception e) {
-				System.out.println("获取Message失败");
 				break;
 			}
-			message = (Message) obj;
-			line = message.getMessage();
-			System.out.println(line);
+			System.out.println(message.getMessage());
 		}
+		
 		try {
 			ois.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		System.out.println("断开服务器连接");
 	}
 
 }

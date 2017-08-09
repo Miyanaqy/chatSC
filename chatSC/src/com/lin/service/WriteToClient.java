@@ -32,8 +32,11 @@ public class WriteToClient implements Runnable {
 						//oos = new ObjectOutputStream(socket.getOutputStream());
 						//oos.writeObject(message);
 						//oos.flush();
+						System.out.println(message.getMessage());
 						os.writeObject(message);
 						os.flush();
+						os.reset();
+						
 					} catch (IOException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
