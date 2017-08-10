@@ -4,14 +4,14 @@ import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Message implements Serializable {
-	private String addr;
+	private int userID;
 	private String message;
 	public Message next;
-	public String getAddr() {
-		return addr;
+	public int getUserID() {
+		return userID;
 	}
-	public void setAddr(String addr) {
-		this.addr = addr;
+	public void setUserID(int userID) {
+		this.userID = userID;
 	}
 	public String getMessage() {
 		return message;

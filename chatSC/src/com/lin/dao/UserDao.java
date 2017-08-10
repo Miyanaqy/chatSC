@@ -2,25 +2,32 @@
 package com.lin.dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+
+import org.junit.Test;
 
 import com.lin.utils.ConnectionPool;
 
 public class UserDao {
-	public int loginUser(String user, String password) {
+	
+	@Test
+	public void loginUser() {
 		Connection conn = ConnectionPool.getConnectionPool().getConnection();
 		String sql = "SELECT count(*) FROM user WHERE user=? and password=?";
-		Statement st = null;
-		
+		PreparedStatement st = null;
+		ResultSet rs = null;
 		try {
-			st = conn.prepareStatement(sql);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		st = conn.prepareStatement(sql);
+		st.setString(1, "miqnsdf");
+		st.setString(2, "sdfnxcvn");
+		rs = st.executeQuery();
+		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+		System.out.println(rs);
 		
-		return 0;
 	}
 	
 }

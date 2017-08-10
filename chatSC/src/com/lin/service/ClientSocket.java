@@ -37,7 +37,7 @@ public class ClientSocket implements Runnable {
 		String line = "已经连接";
 		Message message = new Message();
 		while(!(line.equals(ClientSocket.EXIT))) {
-			message.setAddr(socket.getLocalAddress().toString());
+			message.setUserID(1);
 			message.setMessage(line);
 			mq.add(message);
 			try {

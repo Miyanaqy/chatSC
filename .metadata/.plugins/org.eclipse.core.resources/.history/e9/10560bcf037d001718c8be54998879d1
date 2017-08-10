@@ -1,0 +1,28 @@
+package com.lin.dao;
+
+import static org.hamcrest.CoreMatchers.instanceOf;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import com.lin.utils.ConnectionPool;
+import com.lin.utils.Message;
+
+public class HistoryDao {
+	public void writeHistory(Message message) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		String sql = "insert into history values(?,?,?,?);";
+		Connection conn = ConnectionPool.getConnectionPool().getConnection();
+		try {
+			st = conn.prepareStatement(sql);
+			int col = st.executeUpdate();
+			System.out.println(col);
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+}
