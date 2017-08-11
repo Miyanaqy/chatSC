@@ -10,24 +10,27 @@ import org.junit.Test;
 
 import com.lin.utils.ConnectionPool;
 
-public class UserDao {
+public class UserDao{
 	
 	@Test
-	public void loginUser() {
+	public String loginUser(String username,String password) throws SQLException {
 		Connection conn = ConnectionPool.getConnectionPool().getConnection();
-		String sql = "SELECT count(*) FROM user WHERE user=? and password=?";
+		String sql = "SELECT * FROM user WHERE username=? and password=?";
 		PreparedStatement st = null;
 		ResultSet rs = null;
+		String user = null;
 		try {
-		st = conn.prepareStatement(sql);
-		st.setString(1, "miqnsdf");
-		st.setString(2, "sdfnxcvn");
+			st = conn.prepareStatement(sql);
+			st.setString(1, username);
+			st.setString(2, password);
 		rs = st.executeQuery();
 		}catch(SQLException e) {
-			e.printStackTrace();
+			System.out.println("数据库连接失败");
 		}
-		System.out.println(rs);
-		
+		while(rs.next()) {
+			user = rs.getString("username");
+		}
+		return user;
 	}
 	
 }

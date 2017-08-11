@@ -19,7 +19,7 @@ public class WriteToClient implements Runnable {
 			message = messageQueue.read();
 			if(message == null) {
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(200);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
@@ -32,7 +32,6 @@ public class WriteToClient implements Runnable {
 						//oos = new ObjectOutputStream(socket.getOutputStream());
 						//oos.writeObject(message);
 						//oos.flush();
-						System.out.println(message.getMessage());
 						os.writeObject(message);
 						os.flush();
 						os.reset();

@@ -9,8 +9,13 @@ import java.net.Socket;
 
 public class ClientDemo1 {
 	
-	@SuppressWarnings("null")
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) {
+		LoginFrame lf = new LoginFrame();
+		lf.setVisible(true);
+		
+	}
+	
+	public static void center() throws IOException {
 		Socket socket = null;
 		ObjectInputStream ois = null;
 		BufferedReader out = null;
@@ -31,16 +36,20 @@ public class ClientDemo1 {
 		out = new BufferedReader(new InputStreamReader(System.in));
 		write = new PrintWriter(socket.getOutputStream());
 		line = out.readLine();
+		try {
 		while(!line.equals("EXIT")) {
 			write.println(line);
 			write.flush();
 			line = out.readLine();
 		}
-		write.println(line);
-		write.flush();
+		}catch(Exception e){
+		}finally {
+			write.println("EXIT");
+			write.flush();
+		}
 		//sl.exit = true;
 		write.close();
 		out.close();
-		
 	}
+	
 }

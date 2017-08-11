@@ -1,0 +1,28 @@
+package clientDemo;
+
+import javax.swing.*;
+
+public class LoginFrame extends JFrame {
+	
+	public LoginFrame() {
+		super();
+		this.setTitle("ChatSC login");
+		this.setLayout(null);
+		this.setSize(300, 200);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setLocationRelativeTo(null);
+		
+		JLabel label_title = new JLabel();
+		label_title.setText("用户登录");
+		label_title.setSize(60, 200);
+		label_title.setLocation(40,40);
+		add(label_title);
+		
+		JLabel label_user = new JLabel();
+		label_user.setText("用户名");
+		label_user.setSize(30, 60);
+		label_user.setLocation(110, 40);
+		add(label_user);
+	}
+	
+}

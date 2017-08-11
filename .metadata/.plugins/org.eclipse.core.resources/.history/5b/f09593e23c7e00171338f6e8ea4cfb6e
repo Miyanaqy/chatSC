@@ -1,0 +1,46 @@
+package com.lin.panels;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JList;
+import javax.swing.JTextArea;
+
+public class ChatFrame extends JFrame {
+	
+	public ChatFrame() {
+		super();
+		this.setSize(600, 900);
+		this.setLocation(100, 100);
+		this.setLayout(null);
+		this.setLocationRelativeTo(null);
+		
+		JLabel chatView = new JLabel();
+		chatView.setSize(250, 400);
+		chatView.setLocation(70, 70);
+		add(chatView)
+		
+		JTextArea chatWindow = new JTextArea();
+		chatWindow.setSize(250, 150);
+		chatWindow.setLocation(70, 400);
+		add(chatWindow);
+		
+		
+		JList<String> userList = new JList<String>();
+		userList.setSize(140, 500);
+		userList.setLocation(490, 70);
+		add(userList);
+		
+		JButton enter = new JButton();
+		enter.setSize(150, 70);
+		enter.setLocation(100, 650);
+		enter.setText("发送消息");
+		add(enter);
+		
+		JButton clear = new JButton();
+		clear.setSize(150, 70);
+		clear.setLocation(350, 650);
+		clear.setText("清空");
+		
+	}
+}

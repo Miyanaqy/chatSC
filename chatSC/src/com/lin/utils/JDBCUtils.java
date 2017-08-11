@@ -15,7 +15,7 @@ public class JDBCUtils {
 	
 	static {
 		ResourceBundle bundle = ResourceBundle.getBundle("jdbc");
-		DRIVER = bundle.getString("driver");
+		DRIVER = bundle.getString("driverClass");
 		URL = bundle.getString("url");
 		USER = bundle.getString("user");
 		PASSWORD = bundle.getString("password");
