@@ -7,20 +7,23 @@ private String Nickname;
 public int getUserID() {
 	return userID;
 }
-public void setUserID(int userID) {
+public User setUserID(int userID) {
 	this.userID = userID;
+	return this;
 }
 public String getUsername() {
 	return username;
 }
-public void setUsername(String username) {
+public User setUsername(String username) {
 	this.username = username;
+	return this;
 }
 public String getNickname() {
 	return Nickname;
 }
-public void setNickname(String nickname) {
+public User setNickname(String nickname) {
 	Nickname = nickname;
+	return this;
 }
 
 }

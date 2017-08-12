@@ -38,7 +38,7 @@ public class ServerListener implements Runnable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("¶Ï¿ª·şÎñÆ÷Á¬½Ó");
+		System.out.println("æ–­å¼€æœåŠ¡å™¨è¿æ¥");
 	}
 
 }

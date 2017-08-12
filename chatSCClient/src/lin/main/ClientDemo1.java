@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 import lin.panels.LoginFrame;
+import lin.utils.SendMessage;
 
 public class ClientDemo1 {
 	
@@ -15,9 +16,10 @@ public class ClientDemo1 {
 		LoginFrame lf = new LoginFrame();
 		lf.setVisible(true);
 		try {
-			lf.socket= new Socket("127.0.0.1", 5506);
+			Socket socket = new Socket("127.0.0.1", 5506);
+			SendMessage.getSendMessage(socket);
 		} catch (Exception e) {
-			System.out.println("无法连接的服务器");
+			System.out.println("鏃犳硶杩炴帴鍒版湇鍔″櫒");
 			System.exit(0);
 		}
 	}
@@ -31,7 +33,7 @@ public class ClientDemo1 {
 		try {
 			socket = new Socket();
 		} catch (Exception e) {
-			System.out.println("客户端连接失败");
+			System.out.println("鏃犳硶杩炴帴鍒版湇鍔″櫒");
 			e.printStackTrace();
 		}
 		ois = new ObjectInputStream(socket.getInputStream());

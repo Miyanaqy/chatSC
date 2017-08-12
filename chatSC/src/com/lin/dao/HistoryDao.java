@@ -8,10 +8,11 @@ import com.lin.utils.ConnectionPool;
 import com.lin.utils.Message;
 
 public class HistoryDao {
+	Connection conn = null;
 	public void writeHistory(Message message) {
 		PreparedStatement st = null;
-		String sql = "insert into history values(null,?,?,?);";
-		Connection conn = ConnectionPool.getConnectionPool().getConnection();
+		String sql = "INSERT INTO history values(null,?,?,?);";
+		conn = ConnectionPool.getConnectionPool().getConnection();
 		try {
 			st = conn.prepareStatement(sql);
 			st.setInt(1, message.getUser().getUserID());
@@ -22,6 +23,13 @@ public class HistoryDao {
 		}catch(SQLException e) {
 			e.printStackTrace();
 		}
+		try {
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ConnectionPool.getConnectionPool().returnConnection(conn);
 		
 	}
 }

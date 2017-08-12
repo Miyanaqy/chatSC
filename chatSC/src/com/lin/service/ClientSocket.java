@@ -45,6 +45,9 @@ public class ClientSocket implements Runnable {
 				
 			}
 			switch(rMessage.getMethod()) {
+			case "register":
+				
+				break;
 			case "login":
 				doLogin(rMessage);
 				break;

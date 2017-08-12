@@ -1,41 +1,41 @@
 package lin.panels;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 import javax.swing.*;
 
 import lin.utils.Message;
+import lin.utils.SendMessage;
 
 public class LoginFrame extends JFrame {
-	public Socket socket;
 
 	public LoginFrame() {
 		super();
 		this.setTitle("ChatSC login");
 		this.setLayout(null);
-		this.setSize(300, 250);
+		this.setSize(320, 250);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setLocationRelativeTo(null);
 		
 		JLabel label_title = new JLabel();
-		label_title.setText("ÓÃ»§µÇÂ¼");
+		label_title.setText("ç”¨  æˆ·  ç™»  å½•");
+		label_title.setHorizontalAlignment(JLabel.CENTER);
+		label_title.setFont(new Font("é»‘ä½“", Font.BOLD, 20));
 		label_title.setSize(200, 60);
 		label_title.setLocation(40,0);
 		add(label_title);
 		
 		JLabel label_user = new JLabel();
-		label_user.setText("ÓÃ»§Ãû");
+		label_user.setText("ç”¨æˆ·åï¼š");
 		label_user.setSize(60, 30);
 		label_user.setLocation(40, 70);
 		add(label_user);
 		
 		JLabel label_psd = new JLabel();
-		label_psd.setText("ÃÜÂë");
+		label_psd.setText("å¯†  ç ï¼š");
 		label_psd.setSize(60, 30);
 		label_psd.setLocation(40, 110);
 		add(label_psd);
@@ -51,81 +51,53 @@ public class LoginFrame extends JFrame {
 		add(passwordIn);
 		
 		JButton submit = new JButton();
-		submit.setText("µÇÂ¼");
+		submit.setText("ç™»å½•");
 		submit.setSize(80, 40);
 		submit.setLocation(40, 160);
 		add(submit);
 		
 		JButton register = new JButton();
-		register.setText("×¢²á");
+		register.setText("æ³¨å†Œ");
 		register.setSize(80, 40);
 		register.setLocation(180, 160);
 		add(register);
 		
+		register.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				Register rs = new Register();
+				rs.setVisible(true);
+				
+			}
+		});
+		
 		submit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
-				ObjectInputStream ois = null;
-				ObjectOutputStream oos = null;
-				try {
-					ois = new ObjectInputStream(socket.getInputStream());
-					oos = new ObjectOutputStream(socket.getOutputStream());
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				
+
 				Message message = new Message();
-				Message rMessage = new Message();
 				String username = userIn.getText();
 				String password = passwordIn.getText();
+				boolean flag = true;
 				if(username == null || username.equals("")) {
-					if(password == null || password.equals("")){
-						JOptionPane.showMessageDialog(null, "ÓÃ»§ÃûÃÜÂë²»ÄÜÎª¿Õ", "µÇÂ½´íÎó", JOptionPane.ERROR_MESSAGE); 
+					flag = false;
+				}
+				if(password == null || password.equals("")) {
+					flag = false;
+				}
+				
+				if(flag) {
+					message.setUsername(username);
+					message.setPassword(password);
+					message.setMethod("login");
+					Message rMessage = SendMessage.getSendMessage().send(message);
+					if(rMessage.getMethod().equals("error")) {
+						JOptionPane.showMessageDialog(null, rMessage.getMessage(), "ç™»å½•é”™è¯¯", JOptionPane.ERROR_MESSAGE); 
+					}else if(rMessage.getMethod().equals("success")) {
+						
 					}
-				}
-				message.setUsername(username);
-				message.setPassword(password);
-				message.setMethod("login");
-				try {
-				oos.writeObject(message);
-				oos.flush();
-				}catch(IOException e) {
-					JOptionPane.showMessageDialog(null, "Á¬½Ó³¬Ê±£¬ÇëÉÔºóÔÙÊÔ", "µÇÂ½´íÎó", JOptionPane.ERROR_MESSAGE); 
-					exit(ois, oos);
-				}
-				try {
-					rMessage = (Message)ois.readObject();
-				} catch (Exception e) {
-					JOptionPane.showMessageDialog(null, "Á¬½Ó³¬Ê±£¬ÇëÉÔºóÔÙÊÔ", "µÇÂ½´íÎó", JOptionPane.ERROR_MESSAGE); 
-					exit(ois, oos);
-				}
-				if(rMessage.getMethod().equals("success")) {
-					
-				}else if(rMessage.getMethod().equals("error")) {
-					JOptionPane.showMessageDialog(null, rMessage.getMessage(), "µÇÂ½´íÎó", JOptionPane.ERROR_MESSAGE); 
-				}
-			}
-			
-			
-			void exit(ObjectInputStream ois, ObjectOutputStream oos) {
-				try {
-					ois.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
-					oos.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				try {
-					socket.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				}else {
+					JOptionPane.showMessageDialog(null, "ç”¨æˆ·åå¯†ç ä¸èƒ½ä¸ºç©º", "ç™»å½•é”™è¯¯", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 			
