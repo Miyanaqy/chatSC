@@ -1,9 +1,19 @@
 package clientDemo;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.net.Socket;
+
 import javax.swing.*;
 
+import com.lin.utils.Message;
+
 public class LoginFrame extends JFrame {
-	
+	public Socket socket;
+
 	public LoginFrame() {
 		super();
 		this.setTitle("ChatSC login");
@@ -51,6 +61,77 @@ public class LoginFrame extends JFrame {
 		register.setSize(80, 40);
 		register.setLocation(180, 160);
 		add(register);
+		
+		submit.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent eve) {
+				ObjectInputStream ois = null;
+				ObjectOutputStream oos = null;
+				try {
+					ois = new ObjectInputStream(socket.getInputStream());
+					oos = new ObjectOutputStream(socket.getOutputStream());
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
+				
+				Message message = new Message();
+				Message rMessage = new Message();
+				String username = userIn.getText();
+				String password = passwordIn.getText();
+				if(username == null || username.equals("")) {
+					if(password == null || password.equals("")){
+						JOptionPane.showMessageDialog(null, "用户名密码不能为空", "登陆错误", JOptionPane.ERROR_MESSAGE); 
+					}
+				}
+				message.setUsername(username);
+				message.setPassword(password);
+				message.setMethod("login");
+				try {
+				oos.writeObject(message);
+				oos.flush();
+				}catch(IOException e) {
+					JOptionPane.showMessageDialog(null, "连接超时，请稍后再试", "登陆错误", JOptionPane.ERROR_MESSAGE); 
+					exit(ois, oos);
+				}
+				try {
+					rMessage = (Message)ois.readObject();
+				} catch (Exception e) {
+					JOptionPane.showMessageDialog(null, "连接超时，请稍后再试", "登陆错误", JOptionPane.ERROR_MESSAGE); 
+					exit(ois, oos);
+				}
+				if(rMessage.getMethod().equals("success")) {
+					
+				}else if(rMessage.getMethod().equals("error")) {
+					JOptionPane.showMessageDialog(null, rMessage.getMessage(), "登陆错误", JOptionPane.ERROR_MESSAGE); 
+				}
+			}
+			
+			
+			void exit(ObjectInputStream ois, ObjectOutputStream oos) {
+				try {
+					ois.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					oos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				try {
+					socket.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
+		});
 	}
+	
+	
 	
 }

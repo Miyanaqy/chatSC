@@ -7,12 +7,10 @@ import com.lin.utils.MessageQueue;
 public class ServerController implements Runnable {
 	public MessageQueue outMessageQueue;
 	public MessageQueue inMessageQueue;
-	private HistoryDao hdao;
 	
 	public ServerController() {
 		this.outMessageQueue = MessageQueue.getMessageQueue("outMessageQueue");
 		this.inMessageQueue = MessageQueue.getMessageQueue("inMessageQueue");
-		this.hdao = new HistoryDao();
 	}
 	@Override
 	public void run() {

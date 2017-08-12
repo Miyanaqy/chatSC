@@ -1,15 +1,17 @@
 package com.lin.service;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.lin.dao.UserDao;
 import com.lin.utils.Message;
 import com.lin.utils.MessageQueue;
+import com.lin.utils.User;
 
 public class ClientSocket implements Runnable {
 	public static final String EXIT = "EXIT";
@@ -21,35 +23,39 @@ public class ClientSocket implements Runnable {
 	}
 	private Socket socket;
 	ObjectOutputStream oos = null;
-	BufferedReader br = null;
+	ObjectInputStream br = null;
 	MessageQueue mq = null;
 	public ClientSocket(Socket socket) throws IOException {
 		this.socket = socket;
 		//ClientSocket.socketSet.add(socket);
-		this.br = new BufferedReader(new InputStreamReader(this.socket.getInputStream()));
+		this.br = new ObjectInputStream(this.socket.getInputStream());
 		this.mq = MessageQueue.getMessageQueue("outMessageQueue");
-		this.oos = new ObjectOutputStream(socket.getOutputStream());
+		this.oos = new ObjectOutputStream(this.socket.getOutputStream());
 		ClientSocket.clientStreamSet.add(this.oos);
 		
 	}
 	@Override
 	public void run() {
-		String line = "已经连接";
-		Message message = new Message();
-		while(!(line.equals(ClientSocket.EXIT))) {
-			message.setUserID(1);
-			message.setMessage(line);
-			mq.add(message);
+		Message rMessage = null;
+		po:while(true) {
 			try {
-				line = br.readLine();
-			} catch (IOException e) {
-				System.out.println("数据获取失败");
+				rMessage = (Message)br.readObject();
+			} catch (Exception e) {
+				System.out.println("失去客户端连接");
 				
 			}
-			//if(socket.isConnected() && !socket.isClosed())
-			//	line = ClientSocket.EXIT;
+			switch(rMessage.getMethod()) {
+			case "login":
+				doLogin(rMessage);
+				break;
+			case "message":
+				doMessageGet(rMessage);
+				break;
+			case "exit":
+				break po;
+			}
 		}
-		//ClientSocket.socketSet.remove(this.socket);
+		
 		try {
 			br.close();
 		} catch (IOException e) {
@@ -64,6 +70,41 @@ public class ClientSocket implements Runnable {
 		}
 		
 		System.out.println("客户端离开");
+	}
+	
+	public void doLogin(Message message) {
+		String username = message.getUsername();
+		String password = message.getPassword();
+		Message wMessage = new Message();
+		try {
+			User user = new UserDao().loginUser(username,password);
+			if(user == null) {
+				wMessage.setMethod("error");
+				wMessage.setMessage("用户名密码错误");
+			}else {
+				wMessage.setMessage("Success");
+				wMessage.setUser(user);
+				wMessage.setMessage("登陆成功，欢迎使用ChatSC");
+			}
+		} catch (SQLException e) {
+			System.out.println("系统错误");
+			e.printStackTrace();
+		}
+		try {
+			oos.writeObject(wMessage);
+			oos.flush();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			socket.close();
+		}catch(IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void doMessageGet(Message message) {
+		mq.add(message);
 	}
 
 }

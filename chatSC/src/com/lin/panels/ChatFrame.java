@@ -49,5 +49,6 @@ public class ChatFrame extends JFrame {
 		clear.setText("Çå¿Õ");
 		add(clear);
 		
+		
 	}
 }

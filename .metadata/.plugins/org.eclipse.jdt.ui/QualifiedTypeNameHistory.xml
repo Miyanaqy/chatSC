@@ -2,7 +2,6 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="java.net.ServerSocket"/>
 <fullyQualifiedTypeName name="com.lin.service.Service"/>
-<fullyQualifiedTypeName name="java.net.Socket"/>
 <fullyQualifiedTypeName name="java.io.BufferedReader"/>
 <fullyQualifiedTypeName name="java.io.PrintWriter"/>
 <fullyQualifiedTypeName name="java.io.InputStreamReader"/>
@@ -18,7 +17,6 @@
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="java.util.Set"/>
 <fullyQualifiedTypeName name="java.util.ResourceBundle"/>
-<fullyQualifiedTypeName name="com.lin.utils.Message"/>
 <fullyQualifiedTypeName name="com.lin.utils.ConnectionPool"/>
 <fullyQualifiedTypeName name="java.sql.Connection"/>
 <fullyQualifiedTypeName name="java.sql.SQLException"/>
@@ -36,4 +34,11 @@
 <fullyQualifiedTypeName name="java.io.BufferedOutputStream"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
 <fullyQualifiedTypeName name="org.junit.Test"/>
+<fullyQualifiedTypeName name="com.lin.dao.UserDao"/>
+<fullyQualifiedTypeName name="com.lin.utils.User"/>
+<fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
+<fullyQualifiedTypeName name="com.lin.utils.Message"/>
+<fullyQualifiedTypeName name="java.net.Socket"/>
+<fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
+<fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
 </qualifiedTypeNameHistroy>

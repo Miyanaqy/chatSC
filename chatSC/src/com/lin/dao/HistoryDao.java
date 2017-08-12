@@ -14,7 +14,7 @@ public class HistoryDao {
 		Connection conn = ConnectionPool.getConnectionPool().getConnection();
 		try {
 			st = conn.prepareStatement(sql);
-			st.setInt(1, message.getUserID());
+			st.setInt(1, message.getUser().getUserID());
 			st.setString(2, message.getMessage());
 			st.setTimestamp(3, new java.sql.Timestamp(new java.util.Date().getTime()));
 			int col = st.executeUpdate();
