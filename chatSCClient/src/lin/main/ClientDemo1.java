@@ -15,13 +15,13 @@ public class ClientDemo1 {
 	public static void main(String[] args) {
 		LoginFrame lf = new LoginFrame();
 		lf.setVisible(true);
-		try {
+		/*try {
 			Socket socket = new Socket("127.0.0.1", 5506);
 			SendMessage.getSendMessage(socket);
 		} catch (Exception e) {
 			System.out.println("无法连接到服务器");
 			System.exit(0);
-		}
+		}*/
 	}
 	
 	public static void center() throws IOException {

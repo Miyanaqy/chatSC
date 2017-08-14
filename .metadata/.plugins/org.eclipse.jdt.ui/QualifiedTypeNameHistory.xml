@@ -50,4 +50,5 @@
 <fullyQualifiedTypeName name="java.sql.PreparedStatement"/>
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="com.lin.utils.ConnectionPool"/>
+<fullyQualifiedTypeName name="java.awt.Frame"/>
 </qualifiedTypeNameHistroy>

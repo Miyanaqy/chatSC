@@ -1,5 +1,6 @@
 package lin.panels;
 
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -107,6 +108,22 @@ public class Register extends JFrame {
 			}
 		});
 		
+		cancel.addActionListener(new RegisterClose(this));
 	}
+	
+	private class RegisterClose implements ActionListener {
+		private Frame frame;
+		public RegisterClose(Frame frame) {
+			super();
+			this.frame = frame;
+		}
+		
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			this.frame.dispose();
+			
+		}
+	}
+
 	
 }
