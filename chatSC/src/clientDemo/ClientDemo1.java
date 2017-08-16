@@ -4,21 +4,43 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Scanner;
+
+import com.lin.utils.Message;
+
+import clientDemo.ServerListener;
 
 public class ClientDemo1 {
 	
-	public static void main(String[] args) {
-		LoginFrame lf = new LoginFrame();
-		lf.setVisible(true);
-		try {
-			lf.socket= new Socket("127.0.0.1", 5506);
-		} catch (Exception e) {
-			System.out.println("无法连接的服务器");
-			System.exit(0);
+	public static void main(String[] args) throws IOException {
+		Socket socket = new Socket("127.0.0.1", 5506);
+		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;
+		Scanner in= new Scanner(System.in);
+		
+		oos = new ObjectOutputStream(socket.getOutputStream());
+		ois = new ObjectInputStream(socket.getInputStream());
+		ServerListener sl = new ServerListener();
+		sl.setOis(ois);
+		Thread thread = new Thread(sl);
+		thread.start();
+		System.out.println(oos);
+		Message message = new Message();
+		String line = "";
+		while(!line.equals("EXIT")) {
+			line = in.nextLine();
+			message.setMethod("message").setMessage(line);
+			oos.writeObject(message);
+			oos.flush();
+			oos.reset();
 		}
+			oos.close();
+			socket.close();
+		
 	}
 	
 	public static void center() throws IOException {

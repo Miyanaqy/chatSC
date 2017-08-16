@@ -4,17 +4,21 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Scanner;
+
+import com.lin.utils.Message;
+import com.lin.utils.SendMessage;
 
 import lin.panels.LoginFrame;
-import lin.utils.SendMessage;
 
 public class ClientDemo1 {
 	
 	public static void main(String[] args) {
-		LoginFrame lf = new LoginFrame();
-		lf.setVisible(true);
+		//LoginFrame lf = new LoginFrame();
+		//lf.setVisible(true);
 		/*try {
 			Socket socket = new Socket("127.0.0.1", 5506);
 			SendMessage.getSendMessage(socket);
@@ -22,10 +26,40 @@ public class ClientDemo1 {
 			System.out.println("无法连接到服务器");
 			System.exit(0);
 		}*/
+		try {
+			center();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void center() throws IOException {
-		Socket socket = null;
+		Socket socket = new Socket("127.0.0.1", 5506);
+		ObjectInputStream ois = null;
+		ObjectOutputStream oos = null;
+		Scanner in= new Scanner(System.in);
+		
+		oos = new ObjectOutputStream(socket.getOutputStream());
+		ois = new ObjectInputStream(socket.getInputStream());
+		ServerListener sl = new ServerListener();
+		sl.setOis(ois);
+		Thread thread = new Thread(sl);
+		thread.start();
+		System.out.println(oos);
+		Message message = new Message();
+		String line = "";
+		while(true) {
+			line = in.nextLine();
+			message.setMethod("message").setMessage(line);
+			oos.writeObject(message);
+			oos.flush();
+			oos.close();
+			socket.close();
+		}
+		
+		
+		/*Socket socket = null;
 		ObjectInputStream ois = null;
 		BufferedReader out = null;
 		PrintWriter write = null;
@@ -58,7 +92,7 @@ public class ClientDemo1 {
 		}
 		//sl.exit = true;
 		write.close();
-		out.close();
+		out.close();*/
 	}
 	
 }

@@ -29,9 +29,7 @@
 <fullyQualifiedTypeName name="org.junit.Test"/>
 <fullyQualifiedTypeName name="com.lin.dao.UserDao"/>
 <fullyQualifiedTypeName name="com.lin.utils.User"/>
-<fullyQualifiedTypeName name="com.lin.utils.Message"/>
 <fullyQualifiedTypeName name="java.io.ObjectInputStream"/>
-<fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
 <fullyQualifiedTypeName name="lin.panels.LoginFrame"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
 <fullyQualifiedTypeName name="javax.swing.JLabel"/>
@@ -43,7 +41,6 @@
 <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
 <fullyQualifiedTypeName name="java.net.Socket"/>
 <fullyQualifiedTypeName name="javax.swing.JPasswordField"/>
-<fullyQualifiedTypeName name="lin.utils.Message"/>
 <fullyQualifiedTypeName name="lin.utils.User"/>
 <fullyQualifiedTypeName name="lin.utils.SendMessage"/>
 <fullyQualifiedTypeName name="java.sql.Connection"/>
@@ -51,4 +48,8 @@
 <fullyQualifiedTypeName name="java.sql.ResultSet"/>
 <fullyQualifiedTypeName name="com.lin.utils.ConnectionPool"/>
 <fullyQualifiedTypeName name="java.awt.Frame"/>
+<fullyQualifiedTypeName name="java.io.ObjectOutputStream"/>
+<fullyQualifiedTypeName name="lin.utils.Message"/>
+<fullyQualifiedTypeName name="java.util.Scanner"/>
+<fullyQualifiedTypeName name="com.lin.utils.Message"/>
 </qualifiedTypeNameHistroy>

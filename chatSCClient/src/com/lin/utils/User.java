@@ -1,4 +1,4 @@
-package lin.utils;
+package com.lin.utils;
 
 public class User {
 private int userID;

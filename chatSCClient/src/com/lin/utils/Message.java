@@ -1,11 +1,11 @@
-package lin.utils;
+package com.lin.utils;
 
 import java.io.Serializable;
 
 @SuppressWarnings("serial")
 public class Message implements Serializable {
 	private String method;
-	private User user;
+	//private User user;
 	private String message;
 	private String password;
 	private String username;
@@ -26,13 +26,13 @@ public class Message implements Serializable {
 		this.username = username;
 		return this;
 	}
-	public User getUser() {
+	/*public User getUser() {
 		return user;
 	}
 	public Message setUser(User user) {
 		this.user = user;
 		return this;
-	}
+	}*/
 	public String getMessage() {
 		return message;
 	}

@@ -26,8 +26,8 @@ public class PanelMain {
 		Thread thread2 = new Thread(service);
 		thread2.start();
 		
-		ChatFrame cf = new ChatFrame();
-		cf.setVisible(true);
+		//ChatFrame cf = new ChatFrame();
+		//cf.setVisible(true);
 	}
 
 }

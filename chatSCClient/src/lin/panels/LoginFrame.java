@@ -7,8 +7,8 @@ import java.net.Socket;
 
 import javax.swing.*;
 
-import lin.utils.Message;
-import lin.utils.SendMessage;
+import com.lin.utils.Message;
+import com.lin.utils.SendMessage;
 
 public class LoginFrame extends JFrame {
 

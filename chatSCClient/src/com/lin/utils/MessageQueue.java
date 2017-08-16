@@ -1,4 +1,4 @@
-package lin.utils;
+package com.lin.utils;
 
 import java.util.HashMap;
 

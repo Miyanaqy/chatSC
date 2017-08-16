@@ -36,14 +36,18 @@ public class ClientSocket implements Runnable {
 	}
 	@Override
 	public void run() {
-		Message rMessage = null;
+		Message rMessage = new Message();
 		po:while(true) {
 			try {
 				rMessage = (Message)br.readObject();
+				
 			} catch (Exception e) {
 				System.out.println("失去客户端连接");
+				e.printStackTrace();
 				
 			}
+			System.out.println(rMessage);
+			System.out.println(rMessage.getMessage());
 			switch(rMessage.getMethod()) {
 			case "register":
 				
@@ -57,6 +61,7 @@ public class ClientSocket implements Runnable {
 			case "exit":
 				break po;
 			}
+			
 		}
 		
 		try {
@@ -86,7 +91,7 @@ public class ClientSocket implements Runnable {
 				wMessage.setMessage("用户名密码错误");
 			}else {
 				wMessage.setMessage("Success");
-				wMessage.setUser(user);
+				//wMessage.setUser(user);
 				wMessage.setMessage("登陆成功，欢迎使用ChatSC");
 			}
 		} catch (SQLException e) {

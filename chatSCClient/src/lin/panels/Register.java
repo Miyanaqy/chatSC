@@ -11,9 +11,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import lin.utils.Message;
-import lin.utils.SendMessage;
-import lin.utils.User;
+import com.lin.utils.Message;
+import com.lin.utils.SendMessage;
+import com.lin.utils.User;
 
 public class Register extends JFrame {
 	

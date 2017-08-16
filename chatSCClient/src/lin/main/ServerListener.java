@@ -3,7 +3,7 @@ package lin.main;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 
-import lin.utils.Message;
+import com.lin.utils.Message;
 public class ServerListener implements Runnable {
 	public volatile boolean exit =false;
 	private ObjectInputStream ois = null;
