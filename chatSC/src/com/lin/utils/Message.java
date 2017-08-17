@@ -9,9 +9,16 @@ public class Message implements Serializable {
 	private String message;
 	private String password;
 	private String username;
+	private String date;
 	public Message next;
 	
 	
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
 	public String getPassword() {
 		return password;
 	}

@@ -3,12 +3,10 @@ package lin.panels;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.net.Socket;
 
 import javax.swing.*;
 
-import com.lin.utils.Message;
-import com.lin.utils.SendMessage;
+import lin.server.LoginServer;
 
 public class LoginFrame extends JFrame {
 
@@ -74,8 +72,6 @@ public class LoginFrame extends JFrame {
 		submit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent eve) {
-
-				Message message = new Message();
 				String username = userIn.getText();
 				String password = passwordIn.getText();
 				boolean flag = true;
@@ -87,15 +83,8 @@ public class LoginFrame extends JFrame {
 				}
 				
 				if(flag) {
-					message.setUsername(username);
-					message.setPassword(password);
-					message.setMethod("login");
-					Message rMessage = SendMessage.getSendMessage().send(message);
-					if(rMessage.getMethod().equals("error")) {
-						JOptionPane.showMessageDialog(null, rMessage.getMessage(), "登录错误", JOptionPane.ERROR_MESSAGE); 
-					}else if(rMessage.getMethod().equals("success")) {
-						
-					}
+					LoginServer login = new LoginServer();
+					login.login(username, password);
 				}else {
 					JOptionPane.showMessageDialog(null, "用户名密码不能为空", "登录错误", JOptionPane.ERROR_MESSAGE);
 				}

@@ -1,22 +1,37 @@
-package com.lin.panels;
-
+package lin.panels;
 import java.awt.Color;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+import com.lin.utils.User;
+
 public class ChatFrame extends JFrame {
-	public static void main(String[] args) {
-		ChatFrame chat = new ChatFrame();
-		chat.setVisible(true);
+	private Socket socket;
+	private User user;
+	
+	public Socket getSocket() {
+		return socket;
 	}
+
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 	public ChatFrame() {
 		super();
 		this.setTitle("ChatSC");
@@ -26,14 +41,12 @@ public class ChatFrame extends JFrame {
 		this.setLayout(null);
 		this.setLocationRelativeTo(null);
 		
-		JTextArea chatView = new JTextArea();
-		chatView.setSize(300, 400);
+		JLabel chatView = new JLabel();
+		chatView.setSize(250, 400);
+		chatView.setLocation(70, 70);
 		chatView.setBackground(Color.WHITE);
 		chatView.setText("111");
-		JScrollPane scroll = new JScrollPane(chatView); 
-		scroll.setSize(300, 400);
-		scroll.setLocation(70, 70);
-		add(scroll);
+		add(chatView);
 		
 		JTextArea chatWindow = new JTextArea();
 		chatWindow.setSize(460, 100);
@@ -49,19 +62,25 @@ public class ChatFrame extends JFrame {
 		JButton enter = new JButton();
 		enter.setSize(150, 70);
 		enter.setLocation(100, 650);
-		enter.setText("∑¢ÀÕœ˚œ¢");
+		enter.setText("ÂèëÈÄÅÊ∂àÊÅØ");
 		add(enter);
 		
-		JButton clear = new JButton();
-		clear.setSize(150, 70);
-		clear.setLocation(350, 650);
-		clear.setText("«Âø’");
-		add(clear);
+		JButton exit = new JButton();
+		exit.setSize(150, 70);
+		exit.setLocation(350, 650);
+		exit.setText("Ê∏ÖÁ©∫");
+		add(exit);
 		
 		enter.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				chatView.append("\ndddd");
+				
+			}
+		});
+		
+		exit.addActionListener(new ActionListener(){
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
 				
 			}
 		});

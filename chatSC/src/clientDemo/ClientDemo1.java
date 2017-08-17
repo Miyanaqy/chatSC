@@ -11,6 +11,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import com.lin.utils.Message;
+import com.lin.utils.User;
 
 import clientDemo.ServerListener;
 
@@ -30,10 +31,12 @@ public class ClientDemo1 {
 		thread.start();
 		System.out.println(oos);
 		Message message = new Message();
+		User user = new User();
 		String line = "";
 		while(!line.equals("EXIT")) {
 			line = in.nextLine();
-			message.setMethod("message").setMessage(line);
+			user.setNickname("Miqy").setUserID(3);
+			message.setMethod("message").setMessage(line).setUser(user);
 			oos.writeObject(message);
 			oos.flush();
 			oos.reset();

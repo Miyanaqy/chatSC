@@ -10,28 +10,35 @@ import java.net.Socket;
 import java.util.Scanner;
 
 import com.lin.utils.Message;
+import com.lin.utils.ReceiveMessage;
 import com.lin.utils.SendMessage;
+import com.lin.utils.User;
 
+import lin.main.ServerListener;
 import lin.panels.LoginFrame;
 
 public class ClientDemo1 {
 	
 	public static void main(String[] args) {
-		//LoginFrame lf = new LoginFrame();
-		//lf.setVisible(true);
-		/*try {
-			Socket socket = new Socket("127.0.0.1", 5506);
-			SendMessage.getSendMessage(socket);
+		LoginFrame lf = new LoginFrame();
+		lf.setVisible(true);
+		Socket socket;
+		ObjectOutputStream oos = null;
+		ObjectInputStream ois = null;
+		try {
+			socket = new Socket("127.0.0.1", 5506);
+			SendMessage.createSendMessage(socket, oos);
+			ReceiveMessage.createReceiveMessage(socket, ois);
 		} catch (Exception e) {
 			System.out.println("无法连接到服务器");
 			System.exit(0);
-		}*/
-		try {
+		}
+		/*try {
 			center();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 	}
 	
 	public static void center() throws IOException {
@@ -48,15 +55,18 @@ public class ClientDemo1 {
 		thread.start();
 		System.out.println(oos);
 		Message message = new Message();
+		User user = new User();
 		String line = "";
-		while(true) {
+		while(!line.equals("EXIT")) {
 			line = in.nextLine();
-			message.setMethod("message").setMessage(line);
+			user.setNickname("Miqy").setUserID(3);
+			message.setMethod("message").setMessage(line).setUser(user);
 			oos.writeObject(message);
 			oos.flush();
+			oos.reset();
+		}
 			oos.close();
 			socket.close();
-		}
 		
 		
 		/*Socket socket = null;

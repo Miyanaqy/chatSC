@@ -1,52 +1,53 @@
 package com.lin.utils;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
 public class SendMessage {
-	private static SendMessage sm = null;
-	private Socket socket = null;
-	ObjectInputStream ois = null;
-	ObjectOutputStream oos = null;
-	private SendMessage(Socket socket) {
+	public static SendMessage sm = null;
+	private Socket socket;
+	private ObjectOutputStream oos;
+	
+	private SendMessage(Socket socket, ObjectOutputStream oos) {
 		this.socket = socket;
-		try {
-			ois = new ObjectInputStream(socket.getInputStream());
-			oos = new ObjectOutputStream(socket.getOutputStream());
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		this.oos = oos;
 	}
 	
-	public static SendMessage getSendMessage(Socket socket) {
+	public static SendMessage createSendMessage(Socket socket, ObjectOutputStream oos) {
 		if(sm == null) {
-			sm = new SendMessage(socket);
+			sm = new SendMessage(socket, oos);
 		}
 		return sm;
 	}
-	
 	public static SendMessage getSendMessage() {
-		return getSendMessage(sm.socket);
+		return sm;
 	}
-	
-	public Message send(Message message) {
-		Message rMessage = new Message();
+	public void send(Message message) {
 		try {
 			oos.writeObject(message);
 			oos.flush();
-		}catch(IOException e) {
-			rMessage.setMethod("error").setMessage("连接服务器超时，请稍后再试");
-			
+			oos.reset();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		try {
-			rMessage = (Message)ois.readObject();
-		} catch (Exception e) {
-			rMessage.setMethod("error").setMessage("连接服务器超时请稍后再试");
-		}
-		return rMessage;
+		
 	}
 	
-
+	public void close() {
+		try {
+			oos.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally {
+			if(socket != null) {
+				try {
+					socket.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
 }

@@ -36,27 +36,33 @@ public class ClientSocket implements Runnable {
 	}
 	@Override
 	public void run() {
-		Message rMessage = new Message();
+		Message message = new Message();
+		Message rMessage = null;
 		po:while(true) {
 			try {
-				rMessage = (Message)br.readObject();
+				message = (Message)br.readObject();
 				
 			} catch (Exception e) {
 				System.out.println("失去客户端连接");
 				e.printStackTrace();
 				
 			}
-			System.out.println(rMessage);
-			System.out.println(rMessage.getMessage());
-			switch(rMessage.getMethod()) {
+			System.out.println(message);
+			System.out.println(message.getMessage());
+			if(message == rMessage) {
+				break po;
+			}else {
+				rMessage = message; 
+			}
+			switch(message.getMethod()) {
 			case "register":
 				
-				break;
+				break; 
 			case "login":
-				doLogin(rMessage);
+				doLogin(message);
 				break;
 			case "message":
-				doMessageGet(rMessage);
+				doMessageGet(message);
 				break;
 			case "exit":
 				break po;

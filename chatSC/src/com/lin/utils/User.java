@@ -1,6 +1,8 @@
 package com.lin.utils;
 
-public class User {
+import java.io.Serializable;
+
+public class User implements Serializable {
 private int userID;
 private String username;
 private String Nickname;

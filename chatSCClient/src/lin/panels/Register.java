@@ -11,9 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import com.lin.utils.Message;
-import com.lin.utils.SendMessage;
-import com.lin.utils.User;
+import lin.server.RegisterServer;
 
 public class Register extends JFrame {
 	
@@ -73,8 +71,6 @@ public class Register extends JFrame {
 		submit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Message message = new Message();
-				User user = new User();
 				String username = usernameIn.getText();
 				String password = passwordIn.getText();
 				String nickname = nicknameIn.getText();
@@ -92,16 +88,9 @@ public class Register extends JFrame {
 					flag = false;
 					text += "昵称 ";
 				}
-				
 				if(flag) {
-					user.setUsername(username).setNickname(nickname);
-					message.setMethod("register").setUser(user).setPassword(password);
-					Message rMessage = SendMessage.getSendMessage().send(message);
-					if(rMessage.getMethod().equals("error")) {
-						JOptionPane.showMessageDialog(null, rMessage.getMessage(), "注册失败", JOptionPane.ERROR_MESSAGE);
-					}else if(rMessage.getMessage().equals("success")) {
-						
-					}
+					RegisterServer rs = new RegisterServer();
+					rs.register(username, password, nickname);
 				}else {
 					JOptionPane.showMessageDialog(null, text+"不能为空", "注册失败", JOptionPane.ERROR_MESSAGE);
 				}
