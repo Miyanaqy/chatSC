@@ -15,7 +15,7 @@ public class RegisterServer {
 		User user = new User();
 		user.setNickname(nickname);
 		message.setMethod("register").setUsername(username).setPassword(password).setUser(user);
-		SendMessage.getSendMessage().send(rMessage);
+		SendMessage.getSendMessage().send(message);
 		rMessage = ReceiveMessage.getReceiveMessage().receive();
 		if(rMessage.getMethod().equals("success")) {
 			JOptionPane.showMessageDialog(null, rMessage.getMessage(), "注册成功", JOptionPane.ERROR_MESSAGE);

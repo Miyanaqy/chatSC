@@ -11,7 +11,6 @@ INDEX VERSION 1.130+E:\Git\chatSC\.metadata\.plugins\org.eclipse.jdt.core
 2185099286.index
 3121608192.index
 3372110472.index
-4028257170.index
 1979519979.index
 1468096495.index
 106907102.index

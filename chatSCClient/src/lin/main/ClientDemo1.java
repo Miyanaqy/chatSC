@@ -27,6 +27,9 @@ public class ClientDemo1 {
 		ObjectInputStream ois = null;
 		try {
 			socket = new Socket("127.0.0.1", 5506);
+			lf.setSocket(socket);
+			oos = new ObjectOutputStream(socket.getOutputStream());
+			ois = new ObjectInputStream(socket.getInputStream());
 			SendMessage.createSendMessage(socket, oos);
 			ReceiveMessage.createReceiveMessage(socket, ois);
 		} catch (Exception e) {

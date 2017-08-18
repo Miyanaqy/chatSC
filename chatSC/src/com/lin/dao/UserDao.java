@@ -29,7 +29,10 @@ public class UserDao{
 			System.out.println("数据库连接失败");
 		}
 		if(rs.next()) {
-			user.setNickname(rs.getString("nickname")).setUserID(rs.getInt("userID")).setUsername(rs.getString("username"));
+			System.out.println(rs);
+			String s = rs.getString("nickname");
+			user = new User();
+			user.setNickname(s).setUserID(rs.getInt("userID")).setUsername(rs.getString("username"));
 		}
 		rs.close();
 		ps.close();

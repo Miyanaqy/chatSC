@@ -3,12 +3,21 @@ package lin.panels;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.Socket;
 
 import javax.swing.*;
 
 import lin.server.LoginServer;
 
 public class LoginFrame extends JFrame {
+	private Socket socket;
+	public Socket getSocket() {
+		return socket;
+	}
+
+	public void setSocket(Socket socket) {
+		this.socket = socket;
+	}
 
 	public LoginFrame() {
 		super();
@@ -68,10 +77,13 @@ public class LoginFrame extends JFrame {
 				
 			}
 		});
-		
-		submit.addActionListener(new ActionListener() {
+		class SubmitListener implements ActionListener{
+			private JFrame loginFrame;
+			public SubmitListener(LoginFrame loginFrame) {
+				this.loginFrame = loginFrame;
+			}
 			@Override
-			public void actionPerformed(ActionEvent eve) {
+			public void actionPerformed(ActionEvent arg0) {
 				String username = userIn.getText();
 				String password = passwordIn.getText();
 				boolean flag = true;
@@ -84,15 +96,20 @@ public class LoginFrame extends JFrame {
 				
 				if(flag) {
 					LoginServer login = new LoginServer();
-					login.login(username, password);
+					ChatFrame cf = login.login(username, password);
+					if(cf != null) {
+						cf.setVisible(true);
+						cf.setSocket(socket);
+						loginFrame.setVisible(false);
+						loginFrame.dispose();
+						
+					}
 				}else {
 					JOptionPane.showMessageDialog(null, "用户名密码不能为空", "登录错误", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-			
-		});
+		}
+		submit.addActionListener(new SubmitListener(this));
 	}
-	
-	
 	
 }

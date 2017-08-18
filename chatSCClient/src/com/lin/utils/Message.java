@@ -1,6 +1,9 @@
 package com.lin.utils;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @SuppressWarnings("serial")
 public class Message implements Serializable {
@@ -9,9 +12,26 @@ public class Message implements Serializable {
 	private String message;
 	private String password;
 	private String username;
+	private String date;
 	public Message next;
 	
 	
+	public Date getDate() {
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date currentTime = null;
+		try {
+			currentTime = formatter.parse(this.date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return currentTime;
+	}
+	public Message setDate(Date date) {
+		Date currentTime = new Date();
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.date = formatter.format(currentTime);
+		return this;
+	}
 	public String getPassword() {
 		return password;
 	}

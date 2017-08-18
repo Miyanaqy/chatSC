@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.lin.dao.RegisterDao;
 import com.lin.dao.UserDao;
 import com.lin.utils.Message;
 import com.lin.utils.MessageQueue;
@@ -47,8 +48,6 @@ public class ClientSocket implements Runnable {
 				e.printStackTrace();
 				
 			}
-			System.out.println(message);
-			System.out.println(message.getMessage());
 			if(message == rMessage) {
 				break po;
 			}else {
@@ -56,7 +55,12 @@ public class ClientSocket implements Runnable {
 			}
 			switch(message.getMethod()) {
 			case "register":
-				
+				try {
+					doRegister(message);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				break; 
 			case "login":
 				doLogin(message);
@@ -86,21 +90,24 @@ public class ClientSocket implements Runnable {
 		System.out.println("客户端离开");
 	}
 	
-	public void doLogin(Message message) {
+	public void doRegister(Message message) {
 		String username = message.getUsername();
 		String password = message.getPassword();
+		String nickname = message.getUser().getNickname();
 		Message wMessage = new Message();
+		RegisterDao register = new RegisterDao();
 		try {
-			User user = new UserDao().loginUser(username,password);
-			if(user == null) {
-				wMessage.setMethod("error");
-				wMessage.setMessage("用户名密码错误");
+		if(!register.queryUsername(username)){
+			if(!register.queryNickname(nickname)) {
+				register.insertUser(username, password, nickname);
+				wMessage.setMethod("success").setMessage("注册成功，欢迎使用chatSC聊天室，请登录后使用哦~");
 			}else {
-				wMessage.setMessage("Success");
-				//wMessage.setUser(user);
-				wMessage.setMessage("登陆成功，欢迎使用ChatSC");
+				wMessage.setMethod("error").setMessage("昵称已被注册");
 			}
-		} catch (SQLException e) {
+		}else {
+			wMessage.setMethod("error").setMessage("用户名已被注册");
+		}
+		} catch (Exception e) {
 			System.out.println("系统错误");
 			e.printStackTrace();
 		}
@@ -110,8 +117,28 @@ public class ClientSocket implements Runnable {
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void doLogin(Message message) {
+		String username = message.getUsername();
+		String password = message.getPassword();
+		Message wMessage = new Message();
 		try {
-			socket.close();
+			User user = new UserDao().loginUser(username,password);
+			if(user == null) {
+				wMessage.setMethod("error").setMessage("用户名密码错误");
+			}else {
+				wMessage.setMethod("success");
+				wMessage.setUser(user);
+				wMessage.setMessage("登陆成功，欢迎使用ChatSC");
+			}
+		} catch (SQLException e) {
+			System.out.println("系统错误");
+			e.printStackTrace();
+		}
+		try {
+			oos.writeObject(wMessage);
+			oos.flush();
 		}catch(IOException e) {
 			e.printStackTrace();
 		}
